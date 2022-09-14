@@ -16,6 +16,62 @@ describe('CalculatorService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('hasPrecedence', () => {
+    it('should return false when first operator = "(" and second operator = ")"', () => {
+      expect(service.hasPrecedence('(', ')')).toBe(false);
+    });
+
+    it('should return false when first operator = "*" and second operator = "+"', () => {
+      expect(service.hasPrecedence('*', '+')).toBe(false);
+    });
+
+    it('should return false when first operator = "*" and second operator = "-"', () => {
+      expect(service.hasPrecedence('*', '-')).toBe(false);
+    });
+
+    it('should return false when first operator = "/" and second operator = "+"', () => {
+      expect(service.hasPrecedence('/', '+')).toBe(false);
+    });
+
+    it('should return false when first operator = "/" and second operator = "-"', () => {
+      expect(service.hasPrecedence('/', '-')).toBe(false);
+    });
+
+    it('should return true when first operator = "+" and second operator = "*"', () => {
+      expect(service.hasPrecedence('+', '*')).toBe(true);
+    });
+
+    it('should return true when first operator = "-" and second operator = "*"', () => {
+      expect(service.hasPrecedence('-', '*')).toBe(true);
+    });
+
+    it('should return true when first operator = "+" and second operator = "*"', () => {
+      expect(service.hasPrecedence('+', '/')).toBe(true);
+    });
+
+    it('should return true when first operator = "-" and second operator = "*"', () => {
+      expect(service.hasPrecedence('-', '/')).toBe(true);
+    });
+  });
+
+  describe('applyOperator', () => {
+    it('should return 6', () => {
+      expect(service.applyOperator('+', 4, 2)).toBe(6);
+    });
+
+    it('should return -2', () => {
+      expect(service.applyOperator('-', 4, 2)).toBe(-2);
+    });
+
+    it('should return 8', () => {
+      expect(service.applyOperator('*', 4, 2)).toBe(8);
+    });
+
+    it('should return 0.5', () => {
+      expect(service.applyOperator('/', 4, 2)).toBe(0.5);
+    });
+  });
+
   describe('calculate', () => {
     it('should return 8', () => {
       expect(service.calculate('3+5')).toBe('8');
